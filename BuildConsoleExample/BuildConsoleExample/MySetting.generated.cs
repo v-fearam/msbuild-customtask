@@ -1,6 +1,9 @@
-namespace BuildConsoleExample { 
-public class MySetting {  
-public const string  Prop1 =  "Hello";
-public const string  Prop2 =  "2";
- } 
-} 
+ using System; 
+ namespace BuildConsoleExample { 
+
+  public class MySetting {
+    public const String  Prop1 =  "Hello";
+    public const Int32  Prop2 =  500;
+  }
+
+}

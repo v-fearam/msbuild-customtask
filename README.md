@@ -17,4 +17,5 @@ You can delete MySetting.generated.cs, it will be regenerated
 Next:
 
 1. Complete code generation
+1. Investigate Pre/Post/Clean Steps (More generic, stay away from built-in)
 1. Include custom task on nuget to be used

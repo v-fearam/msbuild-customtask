@@ -23,26 +23,54 @@ namespace CustomTask
 
         public override bool Execute()
         {
-            var settings = ReadProjectSettingFiles();
+            var (success, settings) = ReadProjectSettingFiles();
             return CreateSettingClass(settings);
         }
 
-        private IDictionary<string, object> ReadProjectSettingFiles()
+        private (bool, IDictionary<string, object>) ReadProjectSettingFiles()
         {
+            var values = new Dictionary<string, object>();
             foreach (var item in SettingFiles)
             {
-                var filename = item.GetMetadata("Filename");
-                Log.LogMessage(MessageImportance.High, filename);
-                // so far only reading the the files names, and let us know which files are identified
-                // Next, we neeed to move the properties to a dictionary. 
-                // Input, text files with name:type:value
-                //return the dictionary
+                var identity = item.GetMetadata("Identity");
+                Log.LogMessage(MessageImportance.High, identity);
+                foreach (string line in File.ReadLines(identity))
+                {
+                    var lineParse = line.Split(':');
+                    if (lineParse.Length != 3)
+                    {
+                        return (false, null);
+                    }
+                    var value = GetValue(lineParse[1], lineParse[2]);
+                    if (!value.Item1) {
+                        return (value.Item1, null);
+                    }
+
+                    values[lineParse[0]] = value.Item2;
+                }
             }
-            return new Dictionary<string, object>
+            return (true, values);
+        }
+
+        private (bool, object) GetValue(string type, string value)
+        {
+            try
             {
-                ["Prop1"] = "Hello",
-                ["Prop2"] = 2
-            };
+                // So far only srting and int are supported values.
+                if ("string".Equals(type))
+                {
+                    return (true, value);
+                }
+                if ("int".Equals(type))
+                {
+                    return (true, int.Parse(value));
+                }
+                return (false, null);
+            }
+            catch
+            {
+                return (false, null);
+            }
         }
 
         private bool CreateSettingClass(IDictionary<string, object> settings)
@@ -50,19 +78,24 @@ namespace CustomTask
             try
             {
                 ClassNameFile = $"{SettingClassName}.generated.cs";
+                File.Delete(ClassNameFile);
                 StringBuilder settingsClass = new StringBuilder(1024);
                 // open namespace  
-                settingsClass.Append($"namespace {SettingNamespaceName} {{ \r\n");
-                // open class
-                settingsClass.Append($"public class {SettingClassName} {{  \r\n");
+                settingsClass.Append($@" using System; 
+ namespace {SettingNamespaceName} {{ 
+
+  public class {SettingClassName} {{
+");
                 //For each element in the dictionary create a static property
                 foreach (var keyValuePair in settings)
                 {
-                    //TODO take care the type
-                    settingsClass.Append($"public const string  {keyValuePair.Key} =  \"{keyValuePair.Value}\";\r\n");
+                    string typeName = keyValuePair.Value.GetType().Name;
+                    settingsClass.Append($"    public const {typeName}  {keyValuePair.Key} =  {("String".Equals(typeName)? "\"":"")}{keyValuePair.Value}{("String".Equals(typeName) ? "\"" : "")};\r\n");
                 }
                 // close namespace and class
-                settingsClass.Append(" } \r\n} \r\n");
+                settingsClass.Append(@"  }
+
+}");
                 File.WriteAllText(ClassNameFile, settingsClass.ToString());
 
             }

@@ -17,7 +17,7 @@
 		<SettingFiles Include="$(RootFolder)\*.mysettings" />
 	</ItemGroup>
 
-	<Target Name="GenerateSetting" BeforeTargets="CoreCompile" Inputs="@(SettingFiles)"  Outputs="$(RootFolder)\$(SettingClass).generated.cs">
+	<Target Name="GenerateSetting" BeforeTargets="CoreCompile" Inputs="@(SettingFiles)" Outputs="$(RootFolder)\$(SettingClass).generated.cs">
 		<AppSettingStronglyTyped SettingClassName="$(SettingClass)" SettingNamespaceName="$(SettingNamespace)" SettingFiles="@(SettingFiles)">
 			<Output TaskParameter="ClassNameFile" PropertyName="SettingClassFileName" />
 		</AppSettingStronglyTyped>
@@ -25,5 +25,9 @@
 			<Compile Remove="$(SettingClassFileName)" />
 			<Compile Include="$(SettingClassFileName)" />
 		</ItemGroup>
+	</Target>
+	
+	<Target Name="CustomAfterBuild" AfterTargets="CoreClean">
+		<Delete Files="$(SettingClass).generated.cs" />
 	</Target>
 </Project>

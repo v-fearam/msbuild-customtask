@@ -33,8 +33,7 @@ namespace CustomTask
             foreach (var item in SettingFiles)
             {
                 var identity = item.GetMetadata("Identity");
-                Log.LogMessage(MessageImportance.High, identity);
-                foreach (string line in File.ReadLines(identity))
+                 foreach (string line in File.ReadLines(identity))
                 {
                     var lineParse = line.Split(':');
                     if (lineParse.Length != 3)

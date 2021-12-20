@@ -3,7 +3,7 @@
 
   public class MySetting {
     public const String  Prop1 =  "Hello";
-    public const Int32  Prop2 =  500;
+    public const Int32  Prop2 =  502;
   }
 
 }

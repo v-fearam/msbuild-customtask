@@ -24,6 +24,10 @@ namespace CustomTask
         public override bool Execute()
         {
             var (success, settings) = ReadProjectSettingFiles();
+            if (!success)
+            {
+                return success;
+            }
             return CreateSettingClass(settings);
         }
 
@@ -33,7 +37,7 @@ namespace CustomTask
             foreach (var item in SettingFiles)
             {
                 var identity = item.GetMetadata("Identity");
-                 foreach (string line in File.ReadLines(identity))
+                foreach (string line in File.ReadLines(identity))
                 {
                     var lineParse = line.Split(':');
                     if (lineParse.Length != 3)
@@ -41,7 +45,8 @@ namespace CustomTask
                         return (false, null);
                     }
                     var value = GetValue(lineParse[1], lineParse[2]);
-                    if (!value.Item1) {
+                    if (!value.Item1)
+                    {
                         return (value.Item1, null);
                     }
 
@@ -55,7 +60,7 @@ namespace CustomTask
         {
             try
             {
-                // So far only srting and int are supported values.
+                // So far only few types are supported values.
                 if ("string".Equals(type))
                 {
                     return (true, value);
@@ -64,10 +69,24 @@ namespace CustomTask
                 {
                     return (true, int.Parse(value));
                 }
+                if ("long".Equals(type))
+                {
+                    return (true, long.Parse(value));
+                }
+                if ("guid".Equals(type))
+                {
+                    return (true, Guid.Parse(value));
+                }
+                if ("bool".Equals(type))
+                {
+                    return (true, bool.Parse(value));
+                }
+                Log.LogError($"Type not supported -> {type}");
                 return (false, null);
             }
             catch
             {
+                Log.LogError($"It is not possible parse some value based on the type -> {type} - {value}");
                 return (false, null);
             }
         }
@@ -88,8 +107,8 @@ namespace CustomTask
                 //For each element in the dictionary create a static property
                 foreach (var keyValuePair in settings)
                 {
-                    string typeName = keyValuePair.Value.GetType().Name;
-                    settingsClass.Append($"    public const {typeName}  {keyValuePair.Key} =  {("String".Equals(typeName)? "\"":"")}{keyValuePair.Value}{("String".Equals(typeName) ? "\"" : "")};\r\n");
+                    string typeName = GetTypeString(keyValuePair.Value.GetType().Name);
+                    settingsClass.Append($"    public readonly static {typeName}  {keyValuePair.Key} = {GetValueString(keyValuePair, typeName)};\r\n");
                 }
                 // close namespace and class
                 settingsClass.Append(@"  }
@@ -104,6 +123,44 @@ namespace CustomTask
                 return false;
             }
             return true;
+        }
+
+        private string GetTypeString(string typeName)
+        {
+            if ("String".Equals(typeName)) {
+                return "string";
+            }
+            if ("Boolean".Equals(typeName))
+            {
+                return "bool";
+            }
+            if ("Int32".Equals(typeName))
+            {
+                return "int";
+            }
+            if ("Int64".Equals(typeName))
+            {
+                return "long";
+            }
+            return typeName;
+        }
+
+        private static object GetValueString(KeyValuePair<string, object> keyValuePair, string typeName)
+        {
+            if ("Guid".Equals(typeName))
+            {
+                return $"Guid.Parse(\"{keyValuePair.Value}\")";
+            }
+            if ("string".Equals(typeName))
+            {
+                return $"\"{keyValuePair.Value}\"";
+            }
+            if ("bool".Equals(typeName))
+            {
+                return $"{keyValuePair.Value.ToString().ToLower()}";
+            }
+
+            return keyValuePair.Value;
         }
     }
 }

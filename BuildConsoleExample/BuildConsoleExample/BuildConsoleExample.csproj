@@ -27,7 +27,7 @@
 		</ItemGroup>
 	</Target>
 	
-	<Target Name="CustomAfterBuild" AfterTargets="CoreClean">
+	<Target Name="ForceReGenerateOnRebuild" AfterTargets="CoreClean">
 		<Delete Files="$(SettingClass).generated.cs" />
 	</Target>
 </Project>

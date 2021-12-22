@@ -14,8 +14,13 @@ msbuild -bl
 
 You can delete MySetting.generated.cs, it will be regenerated
 
+The files is using incremental build, it is only regenerated only if
+1- The document doesn't exist
+2- The timestamp of the input file is newer than the output
+
+The rebuild regenerates, it is because the file is deleted after CoreClean (before the build). The clean delete also the generated file.
+
 Next:
 
-1. Complete code generation
-1. Investigate Pre/Post/Clean Steps (More generic, stay away from built-in)
+1. Unit Test
 1. Include custom task on nuget to be used

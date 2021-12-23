@@ -25,6 +25,19 @@ Next:
 
 1. Unit Test
 1. Include custom task on nuget to be used
-1. define scenario: 
-    1. What about generate a api rest client during build? using https://github.com/Azure/autorest
-    2. We can create a small api and generate the console app to access it during build....
+1. define scenario:
+   1. What about generate a api rest client during build? using https://github.com/Azure/autorest. It is a Microsoft tool.
+   2. We can create a small api and generate the console app to access it during build....
+
+To be include in the narrative:
+
+* different between “full” MSBuild (the one that powers Visual Studio) and “portable” MSBuild, or the one bundled in the .NET Core Command Line. (MSBuild.exe runs on .NET Framework)
+* clear example on how to register a custom task based on UsingTask element
+* declaimer to see basic concepts on other articles
+* Custom task on netstandar2.0 and not netstandar2.1 and why
+* Input and output parameters on the custom task. Simple input and list (items) input. 
+* The custom task should be on a different solution to the project which use the task, and the custom task dll must e generated before hand
+* how to package an distribute custom task on nugent package
+* how to see what is going on base on binary log -bl
+* Incremental build, MSBuild can compare the timestamps of the input files with the timestamps of the output files and determine whether to skip, build, or partially rebuild a target.
+* To force rebuild we need to clean generated file after CoreClean

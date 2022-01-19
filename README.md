@@ -128,7 +128,7 @@ nswag openapi2csclient /input:'http://localhost:21951/swagger/v1/swagger.json'  
 
 ### About Scenario
 
-I prefer a simple scenario (The Typed Setting or something simple like that), not useful at all, but it allows present how to use msbuild for generate your code, and the users could create more complex custom tasks later on.
+I prefer a simple scenario (The Typed Setting or something simple like that), not useful at all, but it allows us to present how to use msbuild for generate your code (or anything else, is c# code), and the users could create more complex custom tasks later on.
 
 Ideas? Discussions?
 How to move forward?

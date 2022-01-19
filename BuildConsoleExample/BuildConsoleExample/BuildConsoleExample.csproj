@@ -28,6 +28,6 @@
 	</Target>
 	
 	<Target Name="ForceReGenerateOnRebuild" AfterTargets="CoreClean">
-		<Delete Files="$(SettingClass).generated.cs" />
+		<Delete Files="$(RootFolder)\$(SettingClass).generated.cs" />
 	</Target>
 </Project>

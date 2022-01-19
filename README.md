@@ -14,7 +14,7 @@ Explore possible stories
 ### Projects
 
 - CustomTask, it is the msbuild task.  
-  It receive as input a text file, each line has the format:
+  It receives as input a text file, each line has the format:
 
 ```
 propertyName:type:defaultValue
@@ -22,7 +22,7 @@ propertyName:type:defaultValue
 
 Then a class with that constants is generated.
 
-- BuildConsoleExample, it is the project which use the new custom task.
+- BuildConsoleExample, it is a project which use the new custom task.
 
 ### How to test
 

@@ -121,17 +121,17 @@ nswag openapi2csclient /input:'http://localhost:21951/swagger/v1/swagger.json'  
 **Note:** I don't like this scenario too. I know how to execute but it is not a real CustomTask, it is only code generation. We can use a already pre defined [MSBUILD Exec task](https://docs.microsoft.com/visualstudio/msbuild/exec-task?view=vs-2022). Moreover, NSawg has a already defined MSBuild Task  
 ![msnuild nsawg](./nsawg-msbuild.PNG)
 
-### Technical pending investigations
-
-1. Include custom task on nuget to be used (I think this is important as part or the story)
-1. Unit Test
-
 ### About Scenario
 
 I prefer a simple scenario (The Typed Setting or something simple like that), not useful at all, but it allows us to present how to use msbuild for generate your code (or anything else, is c# code), and the users could create more complex custom tasks later on.
 
 Ideas? Discussions?
 How to move forward?
+
+### Technical pending investigations
+
+1. Include custom task on nuget to be used (I think this is important as part or the story)
+1. Unit Test
 
 ### To be include in the narrative, notes for me
 

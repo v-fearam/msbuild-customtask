@@ -3,16 +3,17 @@
 	<PropertyGroup>
 		<taskForldername>tasks</taskForldername>
 		<taskFramework>netstandard2.0</taskFramework>
-		<CustomTasksAssembly>$(MSBuildThisFileDirectory)\..\$(taskForldername)\$(taskFramework)\$(MSBuildThisFileName).dll</CustomTasksAssembly>
+		<CustomTasksFolder Condition="'$(CustomTasksFolder)' == ''">$(MSBuildThisFileDirectory)\..\$(taskForldername)\$(taskFramework)</CustomTasksFolder>
+		<CustomTasksAssembly>$(CustomTasksFolder)\$(MSBuildThisFileName).dll</CustomTasksAssembly>
 	</PropertyGroup>
 
 	<UsingTask TaskName="$(MSBuildThisFileName).AppSettingStronglyTyped" AssemblyFile="$(CustomTasksAssembly)"/>
 
 	<PropertyGroup>
-		<RootFolder>.</RootFolder>
-		<SettingClass>MySetting</SettingClass>
-		<SettingNamespace>BuildConsoleExample</SettingNamespace>
-		<SettingExtentionFile>mysettings</SettingExtentionFile>
+		<RootFolder Condition="'$(RootFolder)' == ''">.</RootFolder>
+		<SettingClass Condition="'$(SettingClass)' == ''">MySetting</SettingClass>
+		<SettingNamespace Condition="'$(SettingNamespace)' == ''">BuildConsoleExample</SettingNamespace>
+		<SettingExtentionFile Condition="'$(SettingExtentionFile)' == ''">mysettings</SettingExtentionFile>
 	</PropertyGroup>
 
 	<ItemGroup>

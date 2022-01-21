@@ -2,7 +2,7 @@
  namespace BuildConsoleExample { 
 
   public class MySetting {
-    public readonly static string  Prop1 = "Hello1";
+    public readonly static string  Prop1 = "Hello";
     public readonly static int  Prop2 = 504;
     public readonly static long  Prop3 = 200000001;
     public readonly static Guid  Prop4 = Guid.Parse("79a107f3-0109-4425-aa16-81918663b4ed");

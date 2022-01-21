@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="GenerateSetting" BeforeTargets="CoreCompile" Inputs="@(SettingFiles)" Outputs="$(RootFolder)\$(SettingClass).generated.cs">
+		<AppSettingStronglyTyped SettingClassName="$(SettingClass)" SettingNamespaceName="$(SettingNamespace)" SettingFiles="@(SettingFiles)">
+			<Output TaskParameter="ClassNameFile" PropertyName="SettingClassFileName" />
+		</AppSettingStronglyTyped>
+		<ItemGroup>
+			<Compile Remove="$(SettingClassFileName)" />
+			<Compile Include="$(SettingClassFileName)" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="ForceReGenerateOnRebuild" AfterTargets="CoreClean">
+		<Delete Files="$(RootFolder)\$(SettingClass).generated.cs" />
+	</Target>
+</Project>

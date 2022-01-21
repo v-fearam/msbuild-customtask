@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>CustomTask</id>
+        <version>1.0.12</version>
+        <title>CustomTask</title>
+        <authors>Fred</authors>
+        <description>Description</description>
+        <tags>MyTags</tags>
+        <copyright>Copyright © Company 2022</copyright>
+        <developmentDependency>true</developmentDependency>
+        <dependencies/>
+		<!--you should include depencies, but Note that the MSBuild references are part of every MSBuild installation and therefore should not be deployed with our final NuGet package-->
+        <references />
+    </metadata>
+    <files>
+        <file src="build\**" target="build" />
+        <file src=".\bin\Debug\netstandard2.0\CustomTask.dll" target="tasks\netstandard2.0" />
+	    <file src=".\bin\Debug\netstandard2.0\CustomTask.pdb" target="tasks\netstandard2.0" />
+    </files>
+</package>

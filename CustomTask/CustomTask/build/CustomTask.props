@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<taskForldername>tasks</taskForldername>
+		<taskFramework>netstandard2.0</taskFramework>
+		<CustomTasksAssembly>$(MSBuildThisFileDirectory)\..\$(taskForldername)\$(taskFramework)\$(MSBuildThisFileName).dll</CustomTasksAssembly>
+	</PropertyGroup>
+
+	<UsingTask TaskName="$(MSBuildThisFileName).AppSettingStronglyTyped" AssemblyFile="$(CustomTasksAssembly)"/>
+
+	<PropertyGroup>
+		<RootFolder>.</RootFolder>
+		<SettingClass>MySetting</SettingClass>
+		<SettingNamespace>BuildConsoleExample</SettingNamespace>
+		<SettingExtentionFile>mysettings</SettingExtentionFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<SettingFiles Include="$(RootFolder)\*.$(SettingExtentionFile)" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net20</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NSwag.MSBuild" Version="13.15.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="WheatherClient\" />
+	</ItemGroup>
+
+	<!--<Target Name="NSwag" AfterTargets="Build" Condition="'$(TF_BUILD)'!='True'">
+		--><!--<Exec Command="$(NSwagExe) aspnetcore2openapi /project:..\ExampleWebAPI\ExampleWebAPI.csproj /output:swagger.json /configuration:Debug /targetFramework:net5.0 /verbose:true /noBuild:true" />--><!--
+		--><!--<Exec Command="$(NSwagExe) openapi2csclient /input:swagger.json  /classname:WheatherClient /namespace:WheatherClient /output:..\ClientApi\WheatherClient\WheatherClient.cs" ConsoleToMSBuild="true">
+			<Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+		</Exec>--><!--
+	</Target>-->
+
+</Project>

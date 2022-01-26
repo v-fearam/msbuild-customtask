@@ -1,12 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<UsingTask TaskName="CustomTask.CallExternalTool" AssemblyFile="..\..\CustomTask\CustomTask\bin\Debug\netstandard2.0\CustomTask.dll"/>
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="CustomTask" Version="1.0.15">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
+		<PackageReference Include="CustomTask" Version="1.0.15">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
+	<Target Name="fred">
+		<CallExternalTool InputOpenApi="C:\repositories\msbuild-customtask\CallApiAutorest\CodeGenerated\PetStoreClient\perstore.json"></CallExternalTool>
+	</Target>
 </Project>

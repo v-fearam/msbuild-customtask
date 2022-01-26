@@ -1,14 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!--defining properties intereting for my task-->
 	<PropertyGroup>
+		<!--default directory to publish .dll inside a nuget package-->
 		<taskForldername>lib</taskForldername>
 		<taskFramework>netstandard2.0</taskFramework>
+		<!--The folder where the custom task will be present. It points to inside the nuget package. It could be override during development time to get directly from the project compile directory -->
 		<CustomTasksFolder Condition="'$(CustomTasksFolder)' == ''">$(MSBuildThisFileDirectory)\..\$(taskForldername)\$(taskFramework)</CustomTasksFolder>
+		<!--Reference to the assembly which contains the MSBuild Task-->
 		<CustomTasksAssembly>$(CustomTasksFolder)\$(MSBuildThisFileName).dll</CustomTasksAssembly>
 	</PropertyGroup>
 
-	<UsingTask TaskName="$(MSBuildThisFileName).AppSettingStronglyTyped" AssemblyFile="$(CustomTasksAssembly)"/>
+	<!--Referencing MSBuild task. TaskName is the class name and AssemblyFile the dll file path where the class is included-->
+	<UsingTask TaskName="$(MSBuildThisFileName).$(MSBuildThisFileName)" AssemblyFile="$(CustomTasksAssembly)"/>
 
+	<!--Task parameters default values, this can be overriten-->
 	<PropertyGroup>
 		<RootFolder Condition="'$(RootFolder)' == ''">.</RootFolder>
 		<SettingClass Condition="'$(SettingClass)' == ''">MySetting</SettingClass>
@@ -16,6 +22,7 @@
 		<SettingExtentionFile Condition="'$(SettingExtentionFile)' == ''">mysettings</SettingExtentionFile>
 	</PropertyGroup>
 
+	<!--Defining all the text files input parametes-->
 	<ItemGroup>
 		<SettingFiles Include="$(RootFolder)\*.$(SettingExtentionFile)" />
 	</ItemGroup>
